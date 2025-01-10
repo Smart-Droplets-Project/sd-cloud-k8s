@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crate-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crate-db
+  template:
+    metadata:
+      labels:
+        app: crate-db
+    spec:
+      containers:
+      - name: crate
+        image: crate:latest
+        args: 
+        - crate
+        - -Cauth.host_based.enabled=false
+        - -Ccluster.name=democluster
+        - -Chttp.cors.enabled=true
+        - -Chttp.cors.allow-origin=*
+        - -Cgateway.expected_nodes=1
+        ports:
+        - containerPort: 4200
+        - containerPort: 4300
+        env:
+        - name: CRATE_HEAP_SIZE
+          value: "2g"

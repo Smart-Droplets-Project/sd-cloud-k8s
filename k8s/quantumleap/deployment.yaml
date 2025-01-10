@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quantumleap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quantumleap
+  template:
+    metadata:
+      labels:
+        app: quantumleap
+    spec:
+      containers:
+      - name: quantumleap
+        image: orchestracities/quantumleap
+        ports:
+        - containerPort: 8668
+        env:
+        - name: CRATE_HOST
+          value: crate-db

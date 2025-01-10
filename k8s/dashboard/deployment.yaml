@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sd-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sd-dashboard
+  template:
+    metadata:
+      labels:
+        app: sd-dashboard
+    spec:
+      containers:
+      - name: sd-dashboard
+        image: ghcr.io/smart-droplets-project/datamanagementfront/nextjs-app:v1.0.3
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NEXT_PUBLIC_API_BASE_URL
+          value: "http://orion:1026"

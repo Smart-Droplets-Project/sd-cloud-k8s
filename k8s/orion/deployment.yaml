@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orion
+  template:
+    metadata:
+      labels:
+        app: orion
+    spec:
+      containers:
+      - name: orion
+        image: fiware/orion-ld
+        args: ["-dbhost", "mongo-db", "-logLevel", "DEBUG"]
+        ports:
+        - containerPort: 1026
+        readinessProbe:
+          httpGet:
+            path: /version
+            port: 1026
+          initialDelaySeconds: 5
+          periodSeconds: 10

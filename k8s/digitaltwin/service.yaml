@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: digital-twin
+spec:
+  ports:
+    - port: 8000
+      targetPort: 8000
+  selector:
+    app: digital-twin

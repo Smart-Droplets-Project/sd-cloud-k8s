@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: digital-twin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: digital-twin
+  template:
+    metadata:
+      labels:
+        app: digital-twin
+    spec:
+      containers:
+      - name: digital-twin
+        image: docker pull ghcr.io/smart-droplets-project/digitaltwinframework/digitaltwin:c0159ddc84c2bb032f3c8a872b583b445d9ffffe
+        ports:
+        - containerPort: 8000

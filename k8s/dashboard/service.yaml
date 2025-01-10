@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: sd-dashboard
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: sd-dashboard
