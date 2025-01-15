@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: digital-twin
-        image: docker pull ghcr.io/smart-droplets-project/digitaltwinframework/digitaltwin:c0159ddc84c2bb032f3c8a872b583b445d9ffffe
+        image: ghcr.io/smart-droplets-project/digitaltwinframework/digitaltwin:a1fb3475164cb339b459ceded1f2f0e746e46ad3
         ports:
         - containerPort: 8000
