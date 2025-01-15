@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: sd-dashboard
-        image: ghcr.io/smart-droplets-project/datamanagementfront/nextjs-app:v1.0.3
+        image: ghcr.io/smart-droplets-project/datamanagementfront/nextjs-app:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
