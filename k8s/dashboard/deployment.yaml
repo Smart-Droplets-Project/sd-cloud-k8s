@@ -19,5 +19,5 @@ spec:
         ports:
         - containerPort: 3000
         env:
-        - name: NEXT_PUBLIC_API_BASE_URL
+        - name: ORION_CB_BASE_URL
           value: "http://orion:1026"
