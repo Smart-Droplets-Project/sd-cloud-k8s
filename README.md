@@ -61,7 +61,13 @@ Key features:
 
 ## Deployment
 
-To deploy the components to your Kubernetes cluster, use the following command:
+To deploy the components to your Kubernetes cluster, use the _manage.sh_ script provided in the repository:
+
+```bash
+./manage.sh start
+```
+
+Alternatively, you can spin up all of the pods manually using kubectl like so:
 
 ```bash
 kubectl apply -f k8s/
@@ -69,6 +75,19 @@ kubectl apply -f k8s/
 
 This will apply all the Kubernetes configuration files in the k8s/ directory and its subdirectories.
 
+To stop all of the components, you can run the same _manage.sh_ script with the "stop" argument:
+
+```bash
+./manage.sh stop
+```
+
+### NOTE: Local development
+
+When running the cluster locally, if using _minikube_, a tunnel must be opened to allow access to the SD Dashboard. This can be done via _minikube_ using the following command:
+
+```bash
+minikube tunnel
+```
 
 ## Configuration
 
