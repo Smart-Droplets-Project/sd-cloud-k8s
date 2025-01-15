@@ -5,8 +5,10 @@ metadata:
 spec:
   ports:
   - port: 4200
+    name: crate-db-port-1
     targetPort: 4200
   - port: 4300
+    name: crate-db-port-2
     targetPort: 4300
   selector:
     app: crate-db
