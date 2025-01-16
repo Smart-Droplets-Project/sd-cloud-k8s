@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: subscriptions-setup
+data:
+  startup.sh: |
+    #!/bin/sh
+    
+    max_retries=5
+    retry_count=0
+    
+    while [ $retry_count -lt $max_retries ]; do
+      if curl -f http://localhost:1026/version; then
+        
+        # Set up quantumleap subscription
+
+        if curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+          -H 'Content-Type: application/ld+json' \
+          --data-raw '{
+            "description": "Notify for all DeviceMeasurements",
+            "type": "Subscription",
+            "entities": [{"type": "DeviceMeasurement"}],
+            "watchedAttributes": ["numValue", "dateObserved"],
+            "notification": {
+              "attributes": ["numValue", "dateObserved"],
+              "format": "normalized",
+              "endpoint": {
+                "uri": "http://quantumleap:8668/v2/notify",
+                "accept": "application/json"
+              }
+            },
+            "@context": "https://raw.githubusercontent.com/smart-data-models/dataModel.Device/master/context.jsonld"
+          }'; then
+          
+          echo "Subscription created successfully"
+          exit 0
+        else
+          echo "Failed to create subscription"
+        fi
+      fi
+      
+      retry_count=$((retry_count + 1))
+      if [ $retry_count -lt $max_retries ]; then
+        echo "Attempt $retry_count failed, retrying in 10 seconds..."
+        sleep 10
+      fi
+    done
+    
+    echo "All retries failed"
+    exit 1

@@ -24,3 +24,18 @@ spec:
             port: 1026
           initialDelaySeconds: 5
           periodSeconds: 10
+        startupProbe:
+          exec:
+            command:
+            - /bin/sh
+            - /scripts/startup.sh
+          failureThreshold: 30
+          periodSeconds: 10
+        volumeMounts:
+        - name: subscriptions-setup
+          mountPath: /scripts
+      volumes:
+      - name: subscriptions-setup
+        configMap:
+          name: subscriptions-setup
+          defaultMode: 0755
