@@ -19,7 +19,66 @@ There are currently 6 cloud components in the SD cloud. Their _deployment_ and _
 └── manage.sh
 ```
 
-## Components
+## Architecture
+
+![SmartDroplets Architecture](./docs/images/architecture.png)
+
+The system follows a cloud-edge architecture where data acquisition and processing are managed through an interconnected set of components. The core of the architecture is the Orion Context Broker, which facilitates communication between field edge devices, databases, analytics tools, and the Digital Twin Simulator.
+
+### Key Components and Their Roles
+
+#### 1. SD Edge Devices
+
+These are the field-deployed IoT devices responsible for collecting real-time agricultural data, mounted on retrofitted tractors which autonomously traverse the field. 
+They send data to the Orion Context Broker following the upstream flow (1).
+Devices also receive command messages and simulation results through the downstream flow (2).
+
+#### 2. Orion Context Broker
+
+Acts as the central message hub for managing contextual information.
+It receives sensor data (upstream flow 1) from edge devices and stores it in MongoDB for persistent storage.
+It interacts with the Digital Twin Simulator to perform real-time crop state simulations and send back actionable insights.
+
+#### 3. Digital Twin Simulator
+
+Runs daily simulations analyzing crop conditions and forecasting optimal farming actions.
+Uses collected sensor data and third-party weather inputs for accurate modeling.
+Results from the simulations are pushed downstream (2) to edge devices and users.
+
+#### 4. MongoDB & CrateDB
+
+MongoDB stores structured data from Orion Context Broker, providing persistent access to real-time and historical sensor readings.
+CrateDB is used for time-series data analysis and integrates with QuantumLeap for visualization and monitoring.
+
+#### 5. QuantumLeap
+
+QuantumLeap subscribes to updates from the Orion Context Broker, and stores time-series data from in CrateDB for advanced analysis. Using this API, the dashboard provides analytical data through charts.
+
+#### 6. SD Dashboard
+
+The SD Dashboard provides a graphical interface for farmers and stakeholders to view analytics, monitor field conditions, and trigger manual simulation runs.
+
+
+### Data Flows
+
+The Smart Droplets solution follows two main data flows:
+
+1. Upstream Flow (Data Acquisition)
+
+- Autonomous field systems collect real-time data at the edge.
+- Third-party weather data is integrated to enhance the accuracy of Digital Twin (DT) simulations.
+- Farmers can manually input field operation data or import legacy data for specific crops and fields.
+
+2. Downstream Flow (Simulation & Recommendations)
+
+- The DT simulator runs daily, analyzing crop conditions and generating predictions to optimize yield and minimize pesticide use.
+- Farmers can also trigger manual simulations by entering additional data.
+- Simulation results, along with actionable recommendations, are communicated to users and edge devices.
+- These data flows ensure seamless integration between real-time field data, external sources, and predictive simulations, enabling informed decision-making.
+
+
+
+## Component Descriptions
 
 ### Orion Context Broker
 
