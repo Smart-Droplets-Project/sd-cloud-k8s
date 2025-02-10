@@ -21,3 +21,5 @@ spec:
         env:
         - name: ORION_CB_BASE_URL
           value: "http://orion:1026"
+        - name: QUANTUMLEAP_URL
+          value: "http://quantumleap:8668"
