@@ -148,6 +148,12 @@ When running the cluster locally, if using _minikube_, a tunnel must be opened t
 minikube tunnel
 ```
 
+## Security Mechanisms
+
+![SmartDroplets Secure Architecture](./docs/images/sd_gateway.png)
+
+The Smart Droplets data platform is secured through OAuth2, employing an OAuth2 gateway in front of the protected API routes. An identity provider manages user authenticaiton and authorization. Endpoints are protected through an OAuth2 proxy.
+
 ## Configuration
 
 Each component may have specific configuration options. Refer to the individual YAML files for detailed configuration settings.
