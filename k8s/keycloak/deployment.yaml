@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:latest
+        args: ["start-dev"]
+        
+        env:
+        - name: KEYCLOAK_ADMIN
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-credentials
+              key: admin-username
+        - name: KEYCLOAK_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-credentials
+              key: admin-password
+        - name: KC_HEALTH_ENABLED
+          value: "true"
+        
+        ports:
+        - containerPort: 8080
+        - containerPort: 9000
+        
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 9000
+          initialDelaySeconds: 20
+          periodSeconds: 10
+
+        # startupProbe:
+        #   exec:
+        #     command:
+        #     - /bin/sh
+        #     - /scripts/startup.sh
+        #   failureThreshold: 30
+        #   initialDelaySeconds: 45
+        #   periodSeconds: 10
+
+      volumes:
+      - name: realm-setup
+        configMap:
+          name: realm-setup
+          defaultMode: 0755
