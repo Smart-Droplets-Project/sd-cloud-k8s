@@ -132,7 +132,11 @@ Alternatively, you can spin up all of the pods manually using kubectl like so:
 kubectl apply -f k8s/
 ```
 
-This will apply all the Kubernetes configuration files in the k8s/ directory and its subdirectories.
+This will apply all the Kubernetes configuration files in the k8s/ directory and its subdirectories. After this, run the following script with the appropriate keycloak URL in order to seed the initial realm and farmer (dashboard user):
+
+```bash
+./k8s/keycloak/realm-setup-script.sh
+```
 
 To stop all of the components, you can run the same _manage.sh_ script with the "stop" argument:
 
