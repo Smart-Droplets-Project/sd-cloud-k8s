@@ -23,3 +23,12 @@ spec:
           value: "http://orion:1026"
         - name: QUANTUMLEAP_URL
           value: "http://quantumleap:8668"
+        - name: NEXT_PUBLIC_BASE_URL
+          value: "http://35.246.163.109.nip.io:3000"
+        - name: NEXTAUTH_URL
+          value: "http://35.246.163.109.nip.io:3000"
+        - name: NEXTAUTH_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: sd-dashboard-secrets
+              key: NEXTAUTH_SECRET
