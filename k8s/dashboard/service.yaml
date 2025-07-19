@@ -4,8 +4,16 @@ metadata:
   name: sd-dashboard
 spec:
   type: LoadBalancer
+  loadBalancerIP: 34.107.12.188
   ports:
     - port: 3000
       targetPort: 3000
+      name: next-js-port
+    - port: 80
+      targetPort: 3000
+      name: http-port
+    - port: 443
+      targetPort: 3000
+      name: https-port
   selector:
     app: sd-dashboard
