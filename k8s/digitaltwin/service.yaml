@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: digital-twin
 spec:
+  type: LoadBalancer
   ports:
     - port: 8000
       targetPort: 8000
